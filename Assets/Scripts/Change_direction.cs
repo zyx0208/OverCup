@@ -4,7 +4,11 @@ using UnityEngine;
 
 public class Change_direction : MonoBehaviour
 {
-    int changeType = 0; // 몹의 방향을 어디로 바꾸는지 구분
+    public int changeType = 0; //닿은 몹의 방향을 어디로 바꾸는지 구분
+    //0 : 위
+    //1 : 왼
+    //2 : 아래
+    //3 : 오
 
     void Start()
     {
@@ -14,25 +18,6 @@ public class Change_direction : MonoBehaviour
 
     void Update()
     {
-        if(changeType == 0) // 위쪽
-        {
-
-        }
-        else if (changeType == 1) // 아래쪽
-        {
-
-        }
-        else if (changeType == 2) // 오른쪽
-        {
-
-        }
-        else if (changeType == 3) // 왼쪽
-        {
-
-        }
-        else
-        {
-
-        }
+        
     }
 }
