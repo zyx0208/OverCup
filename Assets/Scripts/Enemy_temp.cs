@@ -5,14 +5,18 @@ using UnityEngine;
 public class Enemy_temp : MonoBehaviour
 {
     public int speed; //캐릭터의 이동속도
-    private int road_type; //캐릭터 이동을 위한 변수
+    public int HP; //캐릭터의 체력
+    public GameObject GM; //플레이어의 HP를 관리하기 위해 사용
     Vector2 direction;
 
     void Start()
     {
-        road_type = 0;
         gameObject.GetComponent<Transform>().position = new Vector3(-5.4f, 1.8f, 0f); //몹 생성 지점 설정
         direction = new Vector2(1f, 0f);
+        GM = GameObject.Find("GameManager"); //게임 중 파일을 지정할 수 없기 때문에, 게임 매니저라는 이름을 받아옴
+
+        //HP설정 코드 추가 예정
+        HP = 10;
     }
 
     // Update is called once per frame
@@ -20,6 +24,10 @@ public class Enemy_temp : MonoBehaviour
     {
         //몹 이동 코드
         this.transform.Translate(direction * speed * Time.deltaTime);
+        if(HP <= 0)
+        {
+            Destroy(this.gameObject);
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -46,6 +54,8 @@ public class Enemy_temp : MonoBehaviour
 
         if (collision.tag == "End")
         {
+            GM.GetComponent<GameManager>().Damage(1);
+            GM.GetComponent<GameManager>().Log_HP();
             Destroy(this.gameObject);
         }
     }

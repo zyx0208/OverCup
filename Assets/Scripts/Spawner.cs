@@ -4,26 +4,33 @@ using UnityEngine;
 
 public class Spawner : MonoBehaviour
 {
-    public float Respawn_time = 1f;
+    public float Respawn_time = 1f; //n초마다 몬스터 소환
     public GameObject Enemy;
     float timer;
-    // Start is called before the first frame update
+    int monster_num; //라운드마다 소환되는 몬스터의 수
+    int count;
     void Start()
     {
+        monster_num = 20;
+        count = 0;
         timer = Respawn_time;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (timer >= 0)
+        if(count < monster_num)
         {
-            timer -= Time.deltaTime;
-        }
-        else
-        {
-            timer = Respawn_time;
-            Instantiate(Enemy);
+            if (timer >= 0)
+            {
+                timer -= Time.deltaTime;
+            }
+            else
+            {
+                count++;
+                timer = Respawn_time;
+                Instantiate(Enemy);
+            }
         }
     }
 }
