@@ -24,14 +24,16 @@ public class GameManager : MonoBehaviour
     }
     public void Log_HP()
     {
-        Debug.Log(playerHP);
+        Debug.Log("플레이어의 체력 : " + playerHP);
     }
     public void Stage_Clear()
     {
+        Debug.Log("스테이지 클리어!");
         stage++;
+        Debug.Log("현재 스테이지 : " + stage);
     }
     public void Log_Stage()
     {
-        Debug.Log(stage);
+        Debug.Log("현재 스테이지 : " + stage);
     }
 }
