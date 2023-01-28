@@ -25,7 +25,8 @@ public class Spawner : MonoBehaviour
     {
         monster_num = 20; //여기서 몬스터의 수(n) 조절
         dead_moster_num = monster_num;
-        count = 0;
+        count = monster_num + 1; //시작할 때 5초 대기시간 주기
+        Invoke("stage_setting", 5f); //스테이지 클리어 후 대기 시간 설정
         timer = Respawn_time;
     }
 
