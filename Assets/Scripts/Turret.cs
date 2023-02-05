@@ -1,19 +1,46 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Turret : MonoBehaviour
 {
-    
+    public GameObject Enemy_temp;
+    //public GameObject bullet = null;
+    private GameObject closeEnemy = null;
+
+    public Enemy_temp Enemy;
+
+    CircleCollider2D scanCollider2D;
+
+    private List<GameObject> collEnemys = new List<GameObject>();
+    private float ftime;
     void Start()
     {
-        
+        scanCollider2D = GetComponent<CircleCollider2D>();
+        //Enemy_temp = GetComponent<Enemy_temp>();
+        //Enemy = GameObject.Find("Enemy_temp").GetComponent<Enemy_temp>();
     }
 
     
     void Update()
     {
-        
+        ftime = Time.deltaTime;
+        if(gameObject.tag == "Tower")
+        {
+            
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        Debug.Log("접근");
+        if (collision.tag == "Enemy") // 콜라이더에 Enemy 태그를 가진 오브젝트가 충돌했을 때
+        {
+            Debug.Log("발사");
+            Enemy.OnDamaged(); // 충돌된 오브젝트에 데미지를 가한다
+        }
+
     }
 }
 

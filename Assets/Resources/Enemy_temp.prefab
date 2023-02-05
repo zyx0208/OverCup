@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 7427756323919899009}
   m_Layer: 0
   m_Name: Enemy_temp
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -100,7 +100,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 5
-  GMscript: {fileID: 0}
+  HP: 10
+  GM: {fileID: 0}
+  spawner: {fileID: 0}
 --- !u!58 &-7071962045440445957
 CircleCollider2D:
   m_ObjectHideFlags: 0

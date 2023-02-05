@@ -40,6 +40,22 @@ public class Enemy_temp : MonoBehaviour
         }
     }
 
+    void OnDie()
+    {
+        Debug.Log("적 처치");
+        Destroy(this); // 오브젝트 파괴
+    }
+
+    public void OnDamaged()
+    {
+        HP--; // 함수가 호출될 때 HP를 1 깍는다
+        Debug.Log(HP);
+        if(HP <= 0) // HP가 0이하일 때
+        {
+            OnDie(); // OnDie 함수를 호출한다
+        }
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         //몬스터가 투명벽에 닿으면, 등록된 값에 따라 방향 전환
