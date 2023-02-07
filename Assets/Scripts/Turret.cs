@@ -8,7 +8,7 @@ public class Turret : MonoBehaviour
     public GameObject bullet = null;
     private GameObject closeEnemy = null;
 
-    private List<GameObject> checkEnemys = new List<GameObject>();
+    private List<GameObject> checkEnemys = new List<GameObject>(); // 적이 남아있는지 체크해주는 리스트
     private float sTime = 0;
 
     void Start()
@@ -21,17 +21,14 @@ public class Turret : MonoBehaviour
         sTime += Time.deltaTime;
         if (checkEnemys.Count > 0)
         {
-            Debug.Log("적 조준");
-            GameObject target = checkEnemys[0];
-            if (this.gameObject.CompareTag("Tower"))
+            GameObject target = checkEnemys[0]; // 가장 첫번째 적 타겟팅
+            if (this.gameObject.CompareTag("Tower")) // 타워의 태그를 확인해 타워들을 구분
             {
-                Debug.Log("타워 확인");
                 if (target != null && sTime > 1.0f)
                 {
-                    Debug.Log("발사 준비");
                     sTime = 0.0f;
                     var Bullet = Instantiate(bullet, transform.position, Quaternion.identity, transform);
-                    Bullet.GetComponent<Bullet>().targetPosition = (target.transform.position - transform.position).normalized;
+                    Bullet.GetComponent<Bullet>().targetPosition = (target.transform.position - transform.position).normalized; // 총알의 목적지를 Bullet 함수로 넘겨줌
                 }
             }
             else
@@ -45,8 +42,7 @@ public class Turret : MonoBehaviour
     {
         if (collision.tag == "Enemy")
         {
-            Debug.Log("탐지");
-            checkEnemys.Add(collision.gameObject);
+            checkEnemys.Add(collision.gameObject); // 적이 탐지되면 체크리스트에 적의 정보를 저장
         }
     }
 
@@ -56,77 +52,11 @@ public class Turret : MonoBehaviour
         {
             if (go == collision.gameObject)
             {
-                checkEnemys.Remove(go);
+                checkEnemys.Remove(go); // 탐지범위를 벗어나면 체크리스트에서 제거
                 break;
             }
         }
     }
-    /*
-    public GameObject Enemy_temp;
-    public GameObject Bullet;
-
-    CircleCollider2D scanCollider2D;
-
-    private List<GameObject> collEnemys = new List<GameObject>();
-    private float ftime;
-    public Vector2 enemyPos; // 탐지된 적의 위치
-    public float Speed = 1.0f;
-
-
-    void Start()
-    {
-        scanCollider2D = GetComponent<CircleCollider2D>();
-        Enemy_temp = GameObject.Find("Enemy_temp");
-    }
-
-    
-    void Update()
-    {
-        ftime = Time.deltaTime;
-        if(gameObject.tag == "Tower")
-        {
-            
-        }
-    }
-
-    void Shot()
-    {
-        Debug.Log("Shot!!");
-        ftime += Time.deltaTime;
-        if(ftime > 0.5f)
-        {
-            Debug.Log("Shot!!!!");
-            GameObject Bul = Instantiate(Bullet);
-            Vector2 posB = this.gameObject.transform.position;
-            Bul.transform.position = new Vector2(posB.x, posB.y); // 포탑 위치에 총알 생성
-            //Bul.transform.position = Vector3.MoveTowards(Bul.transform.position, enemyPos, Speed * Time.deltaTime);
-        }
-        
-    }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        Debug.Log("접근");
-        if (collision.tag == "Enemy") // 콜라이더에 Enemy 태그를 가진 오브젝트가 충돌했을 때
-        {
-            Bullet.enemyPos = collision.gameObject.transform.position;
-            Debug.Log(enemyPos);
-            Debug.Log("발사");
-            Shot();
-        }
-    }
-
-    private void OnTriggerStay2D(Collider2D collision)
-    {
-        if (collision.tag == "Enemy") // 콜라이더에 Enemy 태그를 가진 오브젝트가 충돌했을 때
-        {
-            enemyPos = collision.gameObject.transform.position;
-            Debug.Log(enemyPos);
-            //Debug.Log("발사");
-            //Shot();
-        }
-    }
-    */
 }
 
 class Tier
