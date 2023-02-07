@@ -5,21 +5,78 @@ using UnityEngine;
 
 public class Turret : MonoBehaviour
 {
-    public GameObject Enemy_temp;
-    //public GameObject bullet = null;
+    public GameObject bullet = null;
     private GameObject closeEnemy = null;
 
-    public Enemy_temp Enemy;
+    private List<GameObject> checkEnemys = new List<GameObject>();
+    private float sTime = 0;
+
+    void Start()
+    {
+
+    }
+
+    void Update()
+    {
+        sTime += Time.deltaTime;
+        if (checkEnemys.Count > 0)
+        {
+            Debug.Log("적 조준");
+            GameObject target = checkEnemys[0];
+            if (this.gameObject.CompareTag("Tower"))
+            {
+                Debug.Log("타워 확인");
+                if (target != null && sTime > 1.0f)
+                {
+                    Debug.Log("발사 준비");
+                    sTime = 0.0f;
+                    var Bullet = Instantiate(bullet, transform.position, Quaternion.identity, transform);
+                    Bullet.GetComponent<Bullet>().targetPosition = (target.transform.position - transform.position).normalized;
+                }
+            }
+            else
+            {
+                Debug.Log("타워 확인 불가");
+            }
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.tag == "Enemy")
+        {
+            Debug.Log("탐지");
+            checkEnemys.Add(collision.gameObject);
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        foreach (GameObject go in checkEnemys)
+        {
+            if (go == collision.gameObject)
+            {
+                checkEnemys.Remove(go);
+                break;
+            }
+        }
+    }
+    /*
+    public GameObject Enemy_temp;
+    public GameObject Bullet;
 
     CircleCollider2D scanCollider2D;
 
     private List<GameObject> collEnemys = new List<GameObject>();
     private float ftime;
+    public Vector2 enemyPos; // 탐지된 적의 위치
+    public float Speed = 1.0f;
+
+
     void Start()
     {
         scanCollider2D = GetComponent<CircleCollider2D>();
-        //Enemy_temp = GetComponent<Enemy_temp>();
-        //Enemy = GameObject.Find("Enemy_temp").GetComponent<Enemy_temp>();
+        Enemy_temp = GameObject.Find("Enemy_temp");
     }
 
     
@@ -32,16 +89,44 @@ public class Turret : MonoBehaviour
         }
     }
 
+    void Shot()
+    {
+        Debug.Log("Shot!!");
+        ftime += Time.deltaTime;
+        if(ftime > 0.5f)
+        {
+            Debug.Log("Shot!!!!");
+            GameObject Bul = Instantiate(Bullet);
+            Vector2 posB = this.gameObject.transform.position;
+            Bul.transform.position = new Vector2(posB.x, posB.y); // 포탑 위치에 총알 생성
+            //Bul.transform.position = Vector3.MoveTowards(Bul.transform.position, enemyPos, Speed * Time.deltaTime);
+        }
+        
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         Debug.Log("접근");
         if (collision.tag == "Enemy") // 콜라이더에 Enemy 태그를 가진 오브젝트가 충돌했을 때
         {
+            Bullet.enemyPos = collision.gameObject.transform.position;
+            Debug.Log(enemyPos);
             Debug.Log("발사");
-            Enemy.OnDamaged(); // 충돌된 오브젝트에 데미지를 가한다
+            Shot();
         }
-
     }
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision.tag == "Enemy") // 콜라이더에 Enemy 태그를 가진 오브젝트가 충돌했을 때
+        {
+            enemyPos = collision.gameObject.transform.position;
+            Debug.Log(enemyPos);
+            //Debug.Log("발사");
+            //Shot();
+        }
+    }
+    */
 }
 
 class Tier
