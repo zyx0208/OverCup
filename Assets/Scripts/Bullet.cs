@@ -8,7 +8,6 @@ public class Bullet : MonoBehaviour
 {
     public Vector3 targetPosition = Vector3.zero;
     public GameObject Enemy_temp;
-
     private void Awake()
     {
         
@@ -16,7 +15,7 @@ public class Bullet : MonoBehaviour
 
     void Start()
     {
-        
+
     }
 
     void Update()
@@ -31,12 +30,11 @@ public class Bullet : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.tag == "Enemy") // 콜라이더에 Enemy 태그를 가진 오브젝트가 충돌했을 때
+        if (collision.tag == "Enemy") //콜라이더에 Enemy 태그를 가진 오브젝트가 충돌했을 때
         {
             Debug.Log("공격!");
-            Destroy(gameObject);
             Enemy_temp = GameObject.Find("Enemy_temp(Clone)");
-            Enemy_temp.GetComponent<Enemy_temp>().OnDamaged(); // 충돌된 오브젝트에 데미지를 가한다
+            Enemy_temp.GetComponent<Enemy_temp>().OnDamaged(10); //충돌된 오브젝트에 데미지를 가한다
         }
     }
 }

@@ -33,22 +33,18 @@ public class Enemy_temp : MonoBehaviour
     {
         //몹 이동 코드
         this.transform.Translate(direction * speed * Time.deltaTime);
-        if(HP <= 0)
-        {
-            spawner.GetComponent<Spawner>().dead_moster_num--;
-            Destroy(this.gameObject);
-        }
     }
 
     public void OnDie()
     {
         Debug.Log("적 처치");
+        spawner.GetComponent<Spawner>().dead_moster_num--;
         Destroy(this.gameObject); // 오브젝트 파괴
     }
 
-    public void OnDamaged()
+    public void OnDamaged(int val)
     {
-        HP = 0; // 함수가 호출될 때 HP를 1 깍는다
+        HP -= val; // 함수가 호출될 때 매개변수의 값만큼 HP를 깍는다.
         Debug.Log(HP);
         if(HP <= 0) // HP가 0이하일 때
         {
@@ -79,7 +75,7 @@ public class Enemy_temp : MonoBehaviour
             }
         }
 
-        //맵 끝까지 도달하면, 플레이어는 데미지를 입고 해당 몬스터 삭제
+        //맵 끝까지 도달하면, 플레이어는 데미지를 입고 해당 몬스터 삭제 //죽은 몬스터 카운트 세기
         if (collision.tag == "End")
         {
             GM.GetComponent<GameManager>().Damage(1);
