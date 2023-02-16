@@ -34,7 +34,7 @@ public class Bullet : MonoBehaviour
         {
             Debug.Log("공격!");
             Enemy_temp = GameObject.Find("Enemy_temp(Clone)");
-            Enemy_temp.GetComponent<Enemy_temp>().OnDamaged(10); //충돌된 오브젝트에 데미지를 가한다
+            Enemy_temp.GetComponent<Enemy_temp>().OnDamaged(10); //충돌된 오브젝트에 데미지를 가한다 //임시로 10으로 정함
         }
     }
 }
